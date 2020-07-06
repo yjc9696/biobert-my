@@ -1,0 +1,16 @@
+{"predicate": "Reason-Drug", "object_type": "Reason", "subject_type": "Drug"}
+{"predicate": "Route-Drug", "object_type": "Route", "subject_type": "Drug"}
+{"predicate": "Strength-Drug", "object_type": "Strength", "subject_type": "Drug"}
+{"predicate": "Frequency-Drug", "object_type": "Frequency", "subject_type": "Drug"}
+{"predicate": "Duration-Drug", "object_type": "Duration", "subject_type": "Drug"}
+{"predicate": "Form-Drug", "object_type": "Form", "subject_type": "Drug"}
+{"predicate": "Duration-Drug", "object_type": "Frequency", "subject_type": "Drug"}
+{"predicate": "Dosage-Drug", "object_type": "Dosage", "subject_type": "Drug"}
+{"predicate": "ADE-Drug", "object_type": "ADE", "subject_type": "Drug"}
+{"predicate": "Frequency-Drug", "object_type": "Duration", "subject_type": "Drug"}
+{"predicate": "Dosage-Drug", "object_type": "Form", "subject_type": "Drug"}
+{"predicate": "Strength-Drug", "object_type": "Frequency", "subject_type": "Drug"}
+{"predicate": "ADE-Drug", "object_type": "Reason", "subject_type": "Drug"}
+{"predicate": "Reason-Drug", "object_type": "Route", "subject_type": "Drug"}
+{"predicate": "Dosage-Drug", "object_type": "Duration", "subject_type": "Drug"}
+{"predicate": "Duration-Drug", "object_type": "Dosage", "subject_type": "Drug"}
