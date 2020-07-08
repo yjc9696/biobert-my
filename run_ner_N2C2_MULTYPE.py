@@ -16,7 +16,7 @@ import optimization
 import tf_metrics
 import tokenization
 
-os.environ["CUDA_VISIBLE_DEVICES"] = '2'  # 指定第一块GPU可用
+os.environ["CUDA_VISIBLE_DEVICES"] = '3'  # 指定第一块GPU可用
 # config = tf.ConfigProto()
 # config.gpu_options.per_process_gpu_memory_fraction = 0.5  # 程序最多只能占用指定gpu50%的显存
 # config.gpu_options.allow_growth = True      #程序按需申请内存
@@ -98,6 +98,7 @@ flags.DEFINE_integer("iterations_per_loop", 1000,
                      "How many steps to make in each estimator call.")
 
 tf.flags.DEFINE_string("master", None, "[Optional] TensorFlow master URL.")
+tf.flags.DEFINE_string("mul_type", "./datasets/NER/N2C2-MUL/json_data/tag2id.json", "mul_type tag2id path")
 
 flags.DEFINE_integer(
     "num_tpu_cores", 8,
@@ -202,8 +203,8 @@ class NerProcessor(DataProcessor):
             return ["[PAD]", "B", "I", "O", "X", "[CLS]", "[SEP]"]
         path = FLAGS.mul_type
         e_type = ["O"]
-        with open(path) as id2tag:
-            file_json = json.load(id2tag)
+        with open(path) as tag2id:
+            file_json = json.load(tag2id)
             for tag in file_json:
                 if tag!="O":
                     e_type.append(tag)

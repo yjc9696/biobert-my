@@ -12,10 +12,10 @@ class Config(object):
     bert_model_dir = './biobert_v1.1_pubmed/bert-base-uncased.tar.gz'
     bert_vocab_dir = './biobert_v1.1_pubmed/vocab.txt'
     bert_vocab_unk = './biobert_v1.1_pubmed/vocab.txt'
-    data_root = './datasets/NER/' + dataset + '/'
-    npy_data_root = './datasets/NER/' + dataset + '/npy_data/'
-    origin_data_root = './datasets/NER/' + dataset + '/origin_data/'
-    json_data_root = './datasets/NER/' + dataset + '/json_data/'
+    data_root = './datasets/RE/' + dataset + '/'
+    npy_data_root = './datasets/RE/' + dataset + '/npy_data/'
+    origin_data_root = './datasets/RE/' + dataset + '/origin_data/'
+    json_data_root = './datasets/RE/' + dataset + '/json_data/'
 
     id2type_dir = json_data_root + 'id2type.json'
     type2id_dir = json_data_root + 'type2id.json'
@@ -59,7 +59,8 @@ class Config(object):
     clip_grad = 2  # 梯度的最大值
     use_all_positions = False
     is_cut = True
-    line_cut =True
+    line_cut =False
+    RE=True
     # ----------预测数据集----------#
     case = 1  # 0:dev(并测试数据质量) 1:test1, 2:test2
 

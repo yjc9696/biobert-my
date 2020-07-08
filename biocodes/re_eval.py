@@ -1,20 +1,18 @@
-import os
+import argparse
+
 import numpy as np
 import pandas as pd
 import sklearn.metrics
-import argparse
-
+import sklearn.metrics
 
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('--output_path', type=str,  help='')
-parser.add_argument('--answer_path', type=str,  help='')
-parser.add_argument('--task', type=str,  default="binary", help='default:binary, possible other options:{chemprot}')
+parser.add_argument('--output_path', type=str, help='')
+parser.add_argument('--answer_path', type=str, help='')
+parser.add_argument('--task', type=str, default="binary", help='default:binary, possible other options:{chemprot}')
 args = parser.parse_args()
 
-
-testdf = pd.read_csv(args.answer_path, sep="\t", index_col=0)
+testdf = pd.read_csv(args.answer_path, sep="\t")
 preddf = pd.read_csv(args.output_path, sep="\t", header=None)
-
 
 # binary
 if args.task == "binary":
@@ -22,7 +20,7 @@ if args.task == "binary":
     pred_class = [np.argmax(v) for v in pred]
     pred_prob_one = [v[1] for v in pred]
 
-    p,r,f,s = sklearn.metrics.precision_recall_fscore_support(y_pred=pred_class, y_true=testdf["label"])
+    p, r, f, s = sklearn.metrics.precision_recall_fscore_support(y_pred=pred_class, y_true=testdf["label"])
     results = dict()
     results["f1 score"] = f[1]
     results["recall"] = r[1]
@@ -37,16 +35,39 @@ if args.task == "chemprot":
     pred_class = [np.argmax(v) for v in pred]
     str_to_int_mapper = dict()
 
-    for i,v in enumerate(sorted(testdf["label"].unique())):
+    for i, v in enumerate(sorted(testdf["label"].unique())):
         str_to_int_mapper[v] = i
     test_answer = [str_to_int_mapper[v] for v in testdf["label"]]
 
-    p,r,f,s = sklearn.metrics.precision_recall_fscore_support(y_pred=pred_class, y_true=test_answer, labels=[0,1,2,3,4], average="micro")
+    p, r, f, s = sklearn.metrics.precision_recall_fscore_support(y_pred=pred_class, y_true=test_answer, average="micro")
     results = dict()
     results["f1 score"] = f
     results["recall"] = r
     results["precision"] = p
-
-for k,v in results.items():
-    print("{:11s} : {:.2%}".format(k,v))
-
+if args.task == "N2C2":
+    pred = [preddf.iloc[i].tolist() for i in preddf.index]
+    pred_class = [np.argmax(v) for v in pred]
+    str_to_int_mapper = dict()
+    labels = ["Reason-Drug", "Route-Drug", "Strength-Drug", "Frequency-Drug", "Duration-Drug", "Form-Drug", "Dosage-Drug", "ADE-Drug"]
+    for i, v in enumerate(labels):
+        str_to_int_mapper[v] = i
+    test_answer = [str_to_int_mapper[v] for v in testdf["label"]]
+    # print(sklearn.metrics.precision_recall_fscore_support(y_pred=pred_class, y_true=test_answer, labels=[0, 1, 2, 3, 4, 5, 6, 7, 8], average="none"))
+    for i, label in enumerate(labels):
+        print(label + " result")
+        p, r, f, s = sklearn.metrics.precision_recall_fscore_support(y_pred=pred_class, y_true=test_answer, labels=[i], average="macro")
+        results = dict()
+        results["f1 score"] = f
+        results["recall"] = r
+        results["precision"] = p
+        for k, v in results.items():
+            print("{:11s} : {:.2%}".format(k, v))
+        print('\n')
+    print('total' + " result\n")
+    p, r, f, s = sklearn.metrics.precision_recall_fscore_support(y_pred=pred_class, y_true=test_answer, average="micro")
+    results = dict()
+    results["f1 score"] = f
+    results["recall"] = r
+    results["precision"] = p
+for k, v in results.items():
+    print("{:11s} : {:.2%}".format(k, v))

@@ -9,7 +9,7 @@ set -e
 DOWNLOAD_PATH="$BIOBERT_DATA"
 if [ "$BIOBERT_DATA" == "" ]; then
     echo "BIOBERT_DATA not set; downloading to default path ('data')."
-    DOWNLOAD_PATH="./data"
+    DOWNLOAD_PATH="./datasets"
 fi
 DOWNLOAD_PATH_TAR="$DOWNLOAD_PATH.tar.gz"
 
